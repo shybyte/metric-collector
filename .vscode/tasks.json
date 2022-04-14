@@ -8,7 +8,6 @@
         "--allow-net",
         "--allow-read",
         "--allow-write",
-        "--allow-net",
         "start.ts"
       ],
       "problemMatcher": [

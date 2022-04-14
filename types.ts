@@ -1,6 +1,9 @@
+export type Origin = string;
+
 export interface MetricDataPoint {
   name: string;
   value: number;
+  origin: string;
 }
 
 export interface MetricStatistic {

@@ -1,5 +1,5 @@
 import { h, Helmet, renderSSR } from "./deps.ts";
-import { calcStats } from "./stats.ts";
+import { calcStatsByOrigin } from "./stats.ts";
 import { MetricDataPoint } from "./types.ts";
 
 interface MainPageProps {
@@ -19,7 +19,7 @@ export const MainPage = (props: MainPageProps) => {
       <pre>{JSON.stringify(props.metrics)}</pre>
 
       <h2>Stats</h2>
-      <pre>{JSON.stringify(calcStats(props.metrics), null, 2)}</pre>
+      <pre>{JSON.stringify(calcStatsByOrigin(props.metrics), null, 2)}</pre>
     </div>
   );
 };

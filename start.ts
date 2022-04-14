@@ -1,7 +1,7 @@
 import { Application, oakCors, Router } from "./deps.ts";
-import { addStatsToDB } from "./metric-db.ts";
+import { addStatsToDBs } from "./metric-db.ts";
 import { renderMainPage } from "./pages.tsx";
-import { calcStats } from "./stats.ts";
+import { calcStatsByOrigin } from "./stats.ts";
 import { MetricDataPoint } from "./types.ts";
 
 let metricsDataPoints: MetricDataPoint[] = [];
@@ -17,7 +17,7 @@ router.post("/", async (ctx) => {
   const action = body.get('action')
   if (action === 'save') {
     console.log("Saving");
-    await addStatsToDB(calcStats(metricsDataPoints));
+    await addStatsToDBs(calcStatsByOrigin(metricsDataPoints));
   }
   metricsDataPoints = [];
   ctx.response.redirect("/");

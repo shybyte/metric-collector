@@ -1,16 +1,16 @@
-import { simpleStats } from "./deps.ts";
-import { MetricDataPoint, MetricStatistic } from "./types.ts";
+import {simpleStats} from "./deps.ts";
+import {MetricDataPoint, MetricStatistic, Origin} from "./types.ts";
+import {groupByKey, mapValues} from "./utils.ts";
 
-export function calcStats(
+export function calcStatsByOrigin(metricsDataPoints: MetricDataPoint[]): Record<Origin, MetricStatistic[]> {
+  const dataPointsByOrigin: Record<Origin, MetricDataPoint[]> = groupByKey(metricsDataPoints, el => el.origin, el => el);
+  return mapValues(dataPointsByOrigin, calcStats);
+}
+
+function calcStats(
   metricsDataPoints: MetricDataPoint[],
 ): MetricStatistic[] {
-  const valuesByMetric: Record<string, number[]> = {};
-  for (const metricDataPoint of metricsDataPoints) {
-    const values = valuesByMetric[metricDataPoint.name] || [];
-    values.push(metricDataPoint.value);
-    valuesByMetric[metricDataPoint.name] = values;
-  }
-
+  const valuesByMetric = groupByKey(metricsDataPoints, el => el.name, el => el.value);
   return Object.entries(valuesByMetric).map(([key, values]) => {
     return {
       name: key,
