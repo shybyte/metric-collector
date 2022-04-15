@@ -9,10 +9,12 @@ export interface MetricDataPoint {
 export interface MetricStatistic {
   name: string;
   mean: number;
-  median: number;
-  min: number;
-  max: number;
   standardDeviation: number;
+  min: number;
+  q1: number;
+  median: number;
+  q3: number;
+  max: number;
 }
 
 export interface MetricStatisticDbEntry {

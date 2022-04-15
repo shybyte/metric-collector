@@ -8,7 +8,7 @@ export async function addStatsToDBs(statsByOrigin: Record<Origin, MetricStatisti
 }
 
 async function addStatsToDB(origin: Origin, stats: MetricStatistic[], now: Date) {
-  const file = "data/" + origin + ".json";
+  const file = "performance-stats/" + origin + ".json";
   const data: MetricStatisticsDb = await Deno.readTextFile(file).then(
     (result) => JSON.parse(result),
     (error) => {

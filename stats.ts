@@ -15,10 +15,12 @@ function calcStats(
     return {
       name: key,
       mean: simpleStats.mean(values),
-      median: simpleStats.median(values),
-      min: simpleStats.min(values),
-      max: simpleStats.max(values),
       standardDeviation: simpleStats.standardDeviation(values),
+      min: simpleStats.min(values),
+      q1: simpleStats.quantile(values, 0.25),
+      median: simpleStats.median(values),
+      q3: simpleStats.quantile(values, 0.75),
+      max: simpleStats.max(values),
     };
   });
 }
