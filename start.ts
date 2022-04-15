@@ -3,6 +3,9 @@ import { addStatsToDBs } from "./metric-db.ts";
 import { renderMainPage } from "./pages.tsx";
 import { calcStatsByOrigin } from "./stats.ts";
 import { MetricDataPoint } from "./types.ts";
+import * as path from 'https://deno.land/std/path/mod.ts';
+
+export const mainModuleDir = path.dirname(path.fromFileUrl(Deno.mainModule));
 
 let metricsDataPoints: MetricDataPoint[] = [];
 
@@ -38,6 +41,16 @@ app.use(
 );
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// static content
+app.use(async (context, next) => {
+  const root = path.join(mainModuleDir, 'static');
+  try {
+    await context.send({ root })
+  } catch {
+    next()
+  }
+})
 
 app.addEventListener(
   "listen",
