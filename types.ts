@@ -23,5 +23,6 @@ export interface MetricStatisticDbEntry {
 }
 
 export interface MetricStatisticsDb {
+  origin: string;
   entries: MetricStatisticDbEntry[];
 }

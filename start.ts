@@ -1,5 +1,5 @@
 import { Application, oakCors, Router } from "./deps.ts";
-import { addStatsToDBs } from "./metric-db.ts";
+import {addStatsToDBs, readDBs} from "./metric-db.ts";
 import { renderMainPage } from "./pages.tsx";
 import { calcStatsByOrigin } from "./stats.ts";
 import { MetricDataPoint } from "./types.ts";
@@ -10,6 +10,11 @@ export const mainModuleDir = path.dirname(path.fromFileUrl(Deno.mainModule));
 let metricsDataPoints: MetricDataPoint[] = [];
 
 const router = new Router();
+
+router.get("/stats", async (ctx) => {
+  const dbs = await readDBs();
+  ctx.response.body = dbs;
+});
 
 router.get("/", (ctx) => {
   ctx.response.body = renderMainPage(metricsDataPoints);
@@ -27,7 +32,6 @@ router.post("/", async (ctx) => {
 });
 
 router.post("/api/metric", async (ctx) => {
-  console.log(ctx.request.headers);
   const body: MetricDataPoint = await ctx.request.body().value;
   metricsDataPoints.push(body);
   ctx.response.body = { ok: true };

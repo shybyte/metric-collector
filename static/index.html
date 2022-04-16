@@ -8,35 +8,10 @@
 </head>
 <body>
 <!-- Prepare a DOM with a defined width and height for ECharts -->
-<div id="main" style="width: 800px;height:400px;"></div>
-<script type="text/javascript">
-  // Initialize the echarts instance based on the prepared dom
-  var myChart = echarts.init(document.getElementById('main'));
+<select name="" id="originSelector"></select>
+<div id="charts">
 
-  // Specify the configuration items and data for the chart
-  var option = {
-    title: {
-      text: 'ECharts Getting Started Example'
-    },
-    tooltip: {},
-    legend: {
-      data: ['sales']
-    },
-    xAxis: {
-      data: ['20.10']
-    },
-    yAxis: {},
-    series: [
-      {
-        name: 'sales',
-        type: 'boxplot',
-        data: [[3, 10, 30, 40, 50]]
-      }
-    ]
-  };
-
-  // Display the chart using the configuration items and data just specified.
-  myChart.setOption(option);
-</script>
+</div>
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
