@@ -13,6 +13,17 @@ const router = new Router();
 
 router.get("/stats", async (ctx) => {
   const dbs = await readDBs();
+  const newStats = calcStatsByOrigin(metricsDataPoints);
+  const now = new Date();
+  for (const db of dbs) {
+    const newStat = newStats[db.origin];
+    if (newStat) {
+      db.entries.push({
+        date: now.toISOString(),
+        metricStats: newStat,
+      })
+    }
+  }
   ctx.response.body = dbs;
 });
 
